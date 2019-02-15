@@ -15,6 +15,17 @@ public class LuxuryFactory implements  AbstractFactory {
                 break;
         }
         return car;
+    }
 
+    public IPhone createPhone(PhoneType type) {
+        IPhone phone = null;
+        switch (type) {
+            case IPhone:
+                phone = new ApplePhone("Apple");
+                break;
+             default:
+                 break;
+        }
+        return phone;
     }
 }

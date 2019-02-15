@@ -7,5 +7,12 @@ public interface AbstractFactory {
         Dazhong,
         Audi
     }
+
+    enum PhoneType {
+        IPhone,
+        Meizhu
+    }
+
     ICar createCar(Type type);
+    IPhone createPhone(PhoneType type);
 }

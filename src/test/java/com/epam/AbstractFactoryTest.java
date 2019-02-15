@@ -5,7 +5,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * The client uses Factory to create car, it has two kind of cars, normal and luxury, create different kind of car through different factory
+ * The client uses Factory to create car, it has two kind of cars, normal and luxury, create different kind of car through different factory,
+ * It should be distinguished from factory method pattern which only contains one factory method in the interface
  */
 public class AbstractFactoryTest {
 
@@ -29,4 +30,17 @@ public class AbstractFactoryTest {
            Assert.assertEquals("Audi", audiCarImpl.getName());
        }
    }
+
+   @Test
+    public void createIPhone() {
+       AbstractFactory factory = new LuxuryFactory();
+       IPhone phone = factory.createPhone(AbstractFactory.PhoneType.IPhone);
+       if(phone instanceof ApplePhone) {
+           ApplePhone myPhone = (ApplePhone) phone;
+           Assert.assertEquals("Apple", myPhone.getName());
+       }
+   }
+
+
+
 }

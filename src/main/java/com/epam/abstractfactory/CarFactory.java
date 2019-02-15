@@ -22,5 +22,17 @@ public class CarFactory implements AbstractFactory {
         return car;
 
     }
+
+    public IPhone createPhone(PhoneType type) {
+        IPhone phone = null;
+        switch (type) {
+            case Meizhu:
+                phone = new ApplePhone("Meizhu");
+                break;
+            default:
+                break;
+        }
+        return phone;
+    }
 }
 
