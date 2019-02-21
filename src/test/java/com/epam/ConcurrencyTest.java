@@ -4,6 +4,8 @@ import com.epam.concurrent.concurrency.IncreaseNumber;
 import com.epam.concurrent.concurrency.IncreaseNumberRunnable;
 import com.epam.concurrent.concurrency.SyncIncreaseNumber;
 import com.epam.concurrent.lock.IncreaseCount;
+import com.epam.concurrent.semaphore.Customer;
+import com.epam.concurrent.semaphore.Hotel;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -69,6 +71,19 @@ public class ConcurrencyTest {
         t1.start();
         t2.start();
         t1.join();
+    }
+
+    @Test
+    public void bookingRoomTest() throws InterruptedException {
+        Hotel hotel = new Hotel();
+        new Customer("Jack", hotel).start();
+        new Customer("Peter", hotel).start();
+        new Customer("Steven Jobs", hotel).start();
+        new Customer("John", hotel).start();
+        new Customer("Danny", hotel).start();
+        new Customer("Rafe", hotel).start();
+
+        Thread.sleep(100);
 
     }
 }

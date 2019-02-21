@@ -1,5 +1,7 @@
 package com.epam.concurrent.semaphore;
 
+import com.sun.org.apache.bcel.internal.generic.RETURN;
+
 public class Room {
 
     public static enum RoomType {
@@ -16,5 +18,18 @@ public class Room {
 
     public RoomType getRoomType() {
         return this.roomType;
+    }
+
+    public String toString() {
+        switch (roomType) {
+            case NORMAL:
+                return "Normal Room";
+            case FOURSTAR:
+                return "Fourstar Room";
+            case PRESIDENT:
+                return "President Room";
+            default:
+                return "";
+        }
     }
 }

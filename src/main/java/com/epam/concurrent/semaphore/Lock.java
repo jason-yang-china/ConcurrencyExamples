@@ -1,6 +1,6 @@
 package com.epam.concurrent.semaphore;
 
 public interface Lock {
-    void aquire() throws InterruptedException;;
+    void acquire() throws InterruptedException;;
     void release();
 }
