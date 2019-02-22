@@ -4,11 +4,17 @@ import com.epam.concurrent.concurrency.IncreaseNumber;
 import com.epam.concurrent.concurrency.IncreaseNumberRunnable;
 import com.epam.concurrent.concurrency.SyncIncreaseNumber;
 import com.epam.concurrent.lock.IncreaseCount;
+import com.epam.concurrent.lock.ProducerAndConsumerProcessor;
+import com.epam.concurrent.pool.Processor;
 import com.epam.concurrent.semaphore.Customer;
 import com.epam.concurrent.semaphore.Hotel;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 
 public class ConcurrencyTest {
@@ -86,4 +92,44 @@ public class ConcurrencyTest {
         Thread.sleep(100);
 
     }
+
+    @Test
+    public void testThreadPool()  throws InterruptedException  {
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+        int id1 =1;
+        int id2 =2;
+        executor.submit(new Processor(1));
+        executor.submit(new Processor(2));
+
+        executor.shutdown();
+        System.out.println("all tasks have been submitted!");
+        executor.awaitTermination(20, TimeUnit.MINUTES);
+        System.out.println("all tasks have been completed!");
+    }
+
+    @Test
+    public void testProducerAndCustomerProcessor()  throws InterruptedException  {
+        final ProducerAndConsumerProcessor processor = new ProducerAndConsumerProcessor();
+        Thread thread1 = new Thread(new Runnable() {
+            public void run() {
+                processor.producer();
+            }
+        });
+
+        Thread thread2 = new Thread(new Runnable() {
+            public void run() {
+                processor.consumer();
+            }
+        });
+
+        thread1.start();
+        thread2.start();
+
+        thread1.join();
+        thread2.join();
+
+        System.out.println(processor.isRunning());
+
+    }
+
 }

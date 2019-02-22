@@ -32,6 +32,7 @@ public class Customer extends Thread {
             }
         }
 
+
         System.out.println(name+" took "+roomList);
     }
 }
