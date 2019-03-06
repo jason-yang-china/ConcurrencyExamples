@@ -2,19 +2,20 @@ package com.epam;
 
 import com.epam.concurrent.concurrency.IncreaseNumber;
 import com.epam.concurrent.concurrency.IncreaseNumberRunnable;
+import com.epam.concurrent.concurrency.PrimeGenerator;
 import com.epam.concurrent.concurrency.SyncIncreaseNumber;
+import com.epam.concurrent.lock.BankRunner;
 import com.epam.concurrent.lock.IncreaseCount;
 import com.epam.concurrent.lock.ProducerAndConsumerProcessor;
+import com.epam.concurrent.lock.Runner;
 import com.epam.concurrent.pool.Processor;
 import com.epam.concurrent.semaphore.Customer;
 import com.epam.concurrent.semaphore.Hotel;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.math.BigInteger;
+import java.util.concurrent.*;
 
 
 public class ConcurrencyTest {
@@ -131,5 +132,96 @@ public class ConcurrencyTest {
         System.out.println(processor.isRunning());
 
     }
+
+    @Test
+    public void testReentrantLockProcessor() throws InterruptedException {
+
+        final Runner runner = new Runner();
+        Thread thread1 = new Thread(new Runnable() {
+            public void run() {
+                try {
+                    runner.firstThread();
+                }catch (InterruptedException ex) {
+                }
+            }
+        });
+        Thread thread2 = new Thread(new Runnable() {
+            public void run() {
+                try {
+                    runner.secondThread();
+                }catch (InterruptedException ex) {
+
+                }
+            }
+        });
+
+        thread1.start();
+        thread2.start();
+
+        thread1.join();
+        thread2.join();
+
+        runner.finished();
+    }
+
+    @Test
+    public void testAccountBalance() throws InterruptedException {
+        final BankRunner runner = new BankRunner();
+        Thread thread1 = new Thread(new Runnable() {
+            public void run() {
+                try {
+                    runner.thread1();
+                }catch (InterruptedException ex){
+                }
+            }
+        });
+
+        Thread thread2 = new Thread(new Runnable() {
+            public void run() {
+                try{
+                    runner.thread2();
+                }catch (InterruptedException ex) {
+                }
+            }
+        });
+
+        long start = System.currentTimeMillis();
+        thread1.start();
+        thread2.start();
+
+        thread1.join();
+        thread2.join();
+        runner.totalAmount();
+        long end = System.currentTimeMillis();
+        System.out.println("millisecond cost "+(end - start));
+    }
+
+    @Test
+    public void feedPrimesTest() throws InterruptedException{
+        PrimeGenerator primeGenerator = new PrimeGenerator();
+        primeGenerator.start();
+
+        Thread currentThread = Thread.currentThread();
+        System.out.println("Main thread: " + currentThread.getName() + "(" + currentThread.getId() + ")");
+
+
+    }
+
+    @Test
+    public void testInterruptedException() {
+         final BlockingQueue<BigInteger> queue = new ArrayBlockingQueue<BigInteger>(100);
+         try{
+             BigInteger bigInteger1 = BigInteger.ONE;
+             queue.put(bigInteger1);
+             BigInteger bigInteger2 = queue.take();
+             System.out.println("big integer : "+bigInteger2);
+             queue.take();
+             BigInteger bigInteger3 = BigInteger.TEN;
+             queue.put(bigInteger3);
+         }catch (InterruptedException ex) {
+             System.out.println("exception : "+ex);
+         }
+    }
+
 
 }
