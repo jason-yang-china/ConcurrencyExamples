@@ -204,7 +204,6 @@ public class ConcurrencyTest {
         Thread currentThread = Thread.currentThread();
         System.out.println("Main thread: " + currentThread.getName() + "(" + currentThread.getId() + ")");
 
-
     }
 
     @Test
@@ -215,9 +214,9 @@ public class ConcurrencyTest {
              queue.put(bigInteger1);
              BigInteger bigInteger2 = queue.take();
              System.out.println("big integer : "+bigInteger2);
-             queue.take();
+             queue.poll();
              BigInteger bigInteger3 = BigInteger.TEN;
-             queue.put(bigInteger3);
+             queue.offer(bigInteger3);
          }catch (InterruptedException ex) {
              System.out.println("exception : "+ex);
          }
