@@ -6,12 +6,12 @@ import java.util.concurrent.BlockingQueue;
 
 public class ProducerAndConsumerProcessor {
 
-    private BlockingQueue<Integer> queue = new ArrayBlockingQueue<Integer>(100);
+    private BlockingQueue<Integer> queue = new ArrayBlockingQueue<Integer>(1000);
     private Random random = new Random();
     private Object lock = new Object();
 
     private boolean isRunning = true;
-    private final int LIMIT_NUM = 20;
+    private final int LIMIT_NUM = 200;
     public void producer() {
         int num = 0;
 
@@ -41,7 +41,7 @@ public class ProducerAndConsumerProcessor {
                     System.out.print("the size of queue is: "+queue.size());
                     int num = queue.take();
                     System.out.println("; number is: "+num);
-                    while (num == 100) {
+                    while (num == 200) {
                         isRunning = false;
                         break;
                     }
