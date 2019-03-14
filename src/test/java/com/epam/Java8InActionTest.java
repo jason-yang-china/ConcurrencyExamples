@@ -7,8 +7,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
+
+import static java.util.Comparator.comparing;
 
 public class Java8InActionTest {
 
@@ -41,6 +44,21 @@ public class Java8InActionTest {
         System.out.println(oneLine);
         String twoLines = processFile((BufferedReader b) -> b.readLine() + b.readLine());
         System.out.println(twoLines);
+    }
+
+    @Test
+    public void sortWithMethodReferenceTest() {
+        List<Apple> inventory = Arrays.asList(new Apple(80,"green"), new Apple(155, "green"), new Apple(120, "red"));
+        inventory.sort(comparing(Apple::getWeight));
+        System.out.println(inventory);
+
+        inventory.set(2, new Apple(70, "green"));
+        inventory.sort(new Comparator<Apple>() {
+            public int compare(Apple a1, Apple a2) {
+                return a1.getWeight().compareTo(a2.getWeight());
+            }
+        });
+        System.out.println(inventory);
     }
 
     public static List<Apple> filterGreenApples(List<Apple> inventory) {
