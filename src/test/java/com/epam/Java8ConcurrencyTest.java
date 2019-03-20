@@ -2,6 +2,7 @@ package com.epam;
 
 import com.epam.concurrent.cryptocurrency.Crawler;
 import com.epam.concurrent.java8concurrency.Task;
+import org.junit.Assert;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
@@ -14,6 +15,8 @@ import java.util.Map;
 import java.util.concurrent.*;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
+import java.util.stream.LongStream;
+import java.util.stream.Stream;
 
 public class Java8ConcurrencyTest {
 
@@ -145,6 +148,30 @@ public class Java8ConcurrencyTest {
     public void testLambdaPredicate() {
         final List<String> nameList = Arrays.asList("Terry","Jerry","Jenny","Danny","Rafe");
         nameList.stream().filter(s->s.contains("Je")).forEach(System.out::println);
+    }
+
+    @Test
+    public void computeWithOutParallelTest() {
+        long number = Stream.iterate(1L, i->i+1).limit(10_000_000).reduce(0L, Long::sum);
+        System.out.println(number);
+    }
+
+    @Test
+    public void computeWithParallelTest() {
+        long number = Stream.iterate(1L, i->i+1).limit(10_000_000).parallel().reduce(0L, Long::sum);
+        System.out.println(number);
+    }
+
+    @Test
+    public void nonParallelRangedSumTest() {
+        long number =  LongStream.rangeClosed(1, 10_000_000).reduce(0L, Long::sum);
+        Assert.assertEquals(50000005000000L, number);
+    }
+
+    @Test
+    public void parallelRangedSumTest() {
+        long number =  LongStream.rangeClosed(1, 10_000_000).parallel().reduce(0L, Long::sum);
+        Assert.assertEquals(50000005000000L, number);
     }
 
 }

@@ -154,18 +154,20 @@ public class Java8ActionLambdaTest {
         final BestPriceFinder bestPriceFinder = new BestPriceFinder();
         execute("parallel", () -> bestPriceFinder.findPricesParallel("myPhone27S"));
     }
-    private static void execute(String msg, Supplier<List<String>> s) {
-        long start = System.nanoTime();
-        System.out.println(s.get());
-        long duration = (System.nanoTime() - start) / 1_000_000;
-        System.out.println(msg + " done in " + duration + " msecs");
 
-    }
     @Test
     public void testParallelFuturePrice() {
         final BestPriceFinder bestPriceFinder = new BestPriceFinder();
         execute("composed CompletableFuture", () -> bestPriceFinder.findPricesFuture("myPhone27S"));
     }
+
+    private static void execute(String msg, Supplier<List<String>> s) {
+        long start = System.nanoTime();
+        System.out.println(s.get());
+        long duration = (System.nanoTime() - start) / 1_000_000;
+        System.out.println(msg + " done in " + duration + " msecs");
+    }
+
 
     @Test
     public void multiple_threads_should_not_share_threadlocal() {
@@ -193,6 +195,8 @@ public class Java8ActionLambdaTest {
     public void testIterativeSum() {
         long num = Stream.iterate(1L,i->i+1).limit(10_000_000).reduce(0L, Long::sum);
         System.out.println(num);
+
+
         //long num2 = iterativeSum(1000_000);
         //System.out.println(num2);
     }
