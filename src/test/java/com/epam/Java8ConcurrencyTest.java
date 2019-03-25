@@ -1,5 +1,6 @@
 package com.epam;
 
+import com.epam.concurrent.bestbookpricefinder.BestPriceFinder;
 import com.epam.concurrent.cryptocurrency.Crawler;
 import com.epam.concurrent.java8concurrency.Task;
 import org.junit.Assert;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
@@ -172,6 +174,21 @@ public class Java8ConcurrencyTest {
     public void parallelRangedSumTest() {
         long number =  LongStream.rangeClosed(1, 10_000_000).parallel().reduce(0L, Long::sum);
         Assert.assertEquals(50000005000000L, number);
+    }
+
+    @Test
+    public void testBestFinder() {
+        BestPriceFinder bestPriceFinder = new BestPriceFinder();
+        execute("sequential", () -> bestPriceFinder.findPricesSequential("myPhone27S"));
+        execute("parallel", () -> bestPriceFinder.findPricesParallel("myPhone27S"));
+        execute("composed CompletableFuture", () -> bestPriceFinder.findPricesFuture("myPhone27S"));
+    }
+
+    private static void execute(String msg, Supplier<List<String>> s) {
+        long start = System.nanoTime();
+        System.out.println(s.get());
+        long duration = (System.nanoTime() - start) / 1_000_000;
+        System.out.println(msg + " done in " + duration + " msecs");
     }
 
 }
