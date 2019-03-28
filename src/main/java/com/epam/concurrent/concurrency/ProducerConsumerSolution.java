@@ -15,14 +15,14 @@ import java.util.logging.Logger;
         public static void main(String args[]) {
             Vector sharedQueue = new Vector();
             int size = 4;
-            Thread prodThread = new Thread(new Producer(sharedQueue, size), "Producer");
-            Thread consThread = new Thread(new Consumer(sharedQueue, size), "Consumer");
+            Thread prodThread = new Thread(new ProducerConsumerSolution.Producer(sharedQueue, size), "Producer");
+            Thread consThread = new Thread(new ProducerConsumerSolution.Consumer(sharedQueue, size), "Consumer");
             prodThread.start();
             consThread.start();
         }
-    }
 
-    class Producer implements Runnable {
+
+   public static class Producer implements Runnable {
 
         private final Vector sharedQueue;
         private final int SIZE;
@@ -65,7 +65,7 @@ import java.util.logging.Logger;
         }
     }
 
-    class Consumer implements Runnable {
+        public  static class Consumer implements Runnable {
 
         private final Vector sharedQueue;
         private final int SIZE;
@@ -107,6 +107,6 @@ import java.util.logging.Logger;
         }
     }
 
-
+    }
 
 

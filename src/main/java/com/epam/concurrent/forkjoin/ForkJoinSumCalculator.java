@@ -27,10 +27,14 @@ public class ForkJoinSumCalculator extends RecursiveTask<Long> {
             return computeSequentially();
         }else {
             ForkJoinSumCalculator leftTask = new ForkJoinSumCalculator(numbers, start, start+length/2);
-            leftTask.fork();
+            //leftTask.fork();
             ForkJoinSumCalculator rightTask = new ForkJoinSumCalculator(numbers, start+length/2, end);
-            Long rightResult = rightTask.compute();
-            Long leftResult = leftTask.join();
+            //Long rightResult = rightTask.compute();
+            rightTask.fork();
+            //leftTask.compute();//test
+            Long leftResult = leftTask.compute();
+            Long rightResult = rightTask.join();
+            //Long leftResult = leftTask.join();
             return leftResult + rightResult;
         }
 

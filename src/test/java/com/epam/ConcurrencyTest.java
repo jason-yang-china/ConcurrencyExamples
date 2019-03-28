@@ -1,9 +1,6 @@
 package com.epam;
 
-import com.epam.concurrent.concurrency.IncreaseNumber;
-import com.epam.concurrent.concurrency.IncreaseNumberRunnable;
-import com.epam.concurrent.concurrency.PrimeGenerator;
-import com.epam.concurrent.concurrency.SyncIncreaseNumber;
+import com.epam.concurrent.concurrency.*;
 import com.epam.concurrent.lock.BankRunner;
 import com.epam.concurrent.lock.IncreaseCount;
 import com.epam.concurrent.lock.ProducerAndConsumerProcessor;
@@ -15,6 +12,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.math.BigInteger;
+import java.util.Vector;
 import java.util.concurrent.*;
 
 
@@ -194,6 +192,29 @@ public class ConcurrencyTest {
         runner.totalAmount();
         long end = System.currentTimeMillis();
         System.out.println("millisecond cost "+(end - start));
+    }
+
+    @Test
+    public void primesProducerAndConsumerWithBlockQueueTest() throws InterruptedException{
+        PrimeGenerator primeGenerator = new PrimeGenerator();
+        primeGenerator.start();
+
+        Thread currentThread = Thread.currentThread();
+        System.out.println("Main thread: " + currentThread.getName() + "(" + currentThread.getId() + ")");
+
+    }
+
+    @Test
+    public void primesProducerAndConsumerWithOutBlockQueueTest() throws InterruptedException{
+        Vector sharedQueue = new Vector();
+        int size = 4;
+        Thread prodThread = new Thread(new ProducerConsumerSolution.Producer(sharedQueue, size), "Producer");
+        Thread consThread = new Thread(new ProducerConsumerSolution.Consumer(sharedQueue, size), "Consumer");
+        prodThread.start();
+        consThread.start();
+        prodThread.join();
+        consThread.join();
+
     }
 
     @Test
