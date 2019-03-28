@@ -8,6 +8,7 @@ import com.epam.concurrent.lock.Runner;
 import com.epam.concurrent.pool.Processor;
 import com.epam.concurrent.semaphore.Customer;
 import com.epam.concurrent.semaphore.Hotel;
+import com.epam.concurrent.spliterator.SpliteratorSample;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -241,6 +242,12 @@ public class ConcurrencyTest {
          }catch (InterruptedException ex) {
              System.out.println("exception : "+ex);
          }
+    }
+
+    @Test
+    public void testSpliteratorAPI() {
+        SpliteratorSample sample = new SpliteratorSample();
+        sample.printAll();
     }
 
 
