@@ -209,6 +209,19 @@ public class Java8ActionLambdaTest {
         System.out.println(sum);
     }
 
+    @Test
+    public void testCharacters() {
+        List<String> words = Arrays.asList("Hello", "worlda", "man");
+        List<String> uniqueCharacters = words.stream().map(w->w.split("")).flatMap(Arrays::stream).distinct().collect(toList());
+        System.out.println(uniqueCharacters);
+    }
+
+    @Test
+    public void testNumberList() {
+        List<Integer> numbers = Arrays.asList(1,2,3,4,5,6);
+        List<Integer> squares = numbers.stream().map(n->n*n).collect(toList());
+        System.out.println(squares);
+    }
 
     public static long iterativeSum(long n) {
         long result = 0;
