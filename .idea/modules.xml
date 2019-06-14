@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/DesignPattern-TDD.iml" filepath="$PROJECT_DIR$/DesignPattern-TDD.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../tutorials-master/tutorials-master/lombok-custom/lombok-custom.iml" filepath="$PROJECT_DIR$/../tutorials-master/tutorials-master/lombok-custom/lombok-custom.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../tutorials-master/tutorials-master/parent-modules.iml" filepath="$PROJECT_DIR$/../tutorials-master/tutorials-master/parent-modules.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../tutorials-master/tutorials-master/quarkus/quarkus.iml" filepath="$PROJECT_DIR$/../tutorials-master/tutorials-master/quarkus/quarkus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../tutorials-master/tutorials-master/spring-aop/spring-aop.iml" filepath="$PROJECT_DIR$/../tutorials-master/tutorials-master/spring-aop/spring-aop.iml" />
+    </modules>
+  </component>
+</project>

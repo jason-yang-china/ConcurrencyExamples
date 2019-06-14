@@ -1,6 +1,8 @@
 package com.epam;
 
 
+import com.epam.lambda.Foo;
+import com.epam.lambda.FooImplementation;
 import com.epam.observer.ImageFeed;
 import com.epam.observer.People;
 import com.epam.observer.Subject;
@@ -29,6 +31,15 @@ public class SubjectTest {
         System.out.println("some one is not going to subscribe the Subject again, he or she will not get the update again");
         subject.removeObserver(people2);
         subject.getObserverList().stream().forEach(System.out::println);
+
+    }
+
+
+    @Test
+    public void testLambda() {
+        Foo foo = param -> param + "from lambda";
+        FooImplementation fooImplementation = new FooImplementation();
+        fooImplementation.add("message", foo);
 
     }
 }
